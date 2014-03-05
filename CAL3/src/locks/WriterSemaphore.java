@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package semaphores;
+package locks;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,12 +11,12 @@ import java.util.logging.Logger;
  *
  * @author mario
  */
-public class WriterSemaphore extends Thread {
+public class WriterLock extends Thread {
 
     private int id;
-    private BookSemaphore book;
+    private BookLock book;
 
-    public WriterSemaphore(int id, BookSemaphore book) {
+    public WriterLock(int id, BookLock book) {
         this.id = id;
         this.book = book;
         start();
@@ -32,7 +32,7 @@ public class WriterSemaphore extends Thread {
             try {
                 sleep((long) (1000 + 1000 * Math.random()));
             } catch (InterruptedException ex) {
-                Logger.getLogger(WriterSemaphore.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WriterLock.class.getName()).log(Level.SEVERE, null, ex);
             }
             book.write(this);
         }

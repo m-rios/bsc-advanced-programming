@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package semaphores;
+package locks;
 
 import monitors.*;
 import javax.swing.UIManager;
@@ -12,21 +12,21 @@ import javax.swing.UIManager;
  *
  * @author mario
  */
-public class InterfaceSemaphore extends javax.swing.JFrame {
+public class InterfaceLock extends javax.swing.JFrame {
 
     /**
      * Creates new form InterfaceMonitor
      */
-    private BookSemaphore book;
+    private BookLock book;
 
-    public InterfaceSemaphore() {
+    public InterfaceLock() {
         initComponents();
-        book = new BookSemaphore(jTextArea1, jTextArea2, jProgressBar1);
+        book = new BookLock(jTextArea1, jTextArea2, jProgressBar1);
         for (int i = 0; i < 10; i++) {
-            new WriterSemaphore(i, book);
+            new WriterLock(i, book);
         }
         for (int i = 20; i < 35; i++) {
-            new ReaderSemaphore(i, book, jTextArea3);
+            new ReaderLock(i, book, jTextArea3);
         }
     }
 
@@ -173,20 +173,20 @@ public class InterfaceSemaphore extends javax.swing.JFrame {
             }
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfaceSemaphore.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceLock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfaceSemaphore.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceLock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfaceSemaphore.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceLock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfaceSemaphore.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceLock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfaceSemaphore().setVisible(true);
+                new InterfaceLock().setVisible(true);
             }
         });
     }

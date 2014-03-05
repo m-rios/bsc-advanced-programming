@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package semaphores;
+package locks;
 
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
@@ -13,21 +13,21 @@ import javax.swing.JTextArea;
  *
  * @author mario
  */
-public class ReaderSemaphore extends Thread {
+public class ReaderLock extends Thread {
 
     private int id;
     private String contentRead;
-    private BookSemaphore book;
+    private BookLock book;
     private JTextArea output;
 
-    public ReaderSemaphore(int id, BookSemaphore book) {
+    public ReaderLock(int id, BookLock book) {
         this.id = id;
         this.book = book;
         contentRead = "";
         start();
     }
 
-    public ReaderSemaphore(int id, BookSemaphore book, JTextArea output) {
+    public ReaderLock(int id, BookLock book, JTextArea output) {
         this.id = id;
         this.book = book;
         contentRead = new String();
@@ -45,7 +45,7 @@ public class ReaderSemaphore extends Thread {
             try {
                 sleep((long) (500 + 1000 * Math.random()));
             } catch (InterruptedException ex) {
-                Logger.getLogger(ReaderSemaphore.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ReaderLock.class.getName()).log(Level.SEVERE, null, ex);
             }
             contentRead = book.read(this);
             output.setText(output.getText() + this.id + ": " + contentRead + "\n");
