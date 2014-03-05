@@ -61,6 +61,7 @@ public class BookSemaphore {
             mutexW.release();
             
             content += id;
+            progress.setValue(progress.getValue()+1);
             writersField.setText("");
             writerWaiting.release();
         } catch (InterruptedException ex) {
@@ -83,6 +84,8 @@ public class BookSemaphore {
             mutexR.release();
 
             //read
+            sleep((long) (500 + 1000 * Math.random()));
+            
             mutexR.acquire();
             readers.remove(reader);
             updateOutput();
