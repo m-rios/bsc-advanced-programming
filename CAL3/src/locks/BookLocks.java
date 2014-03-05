@@ -9,7 +9,9 @@ import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JProgressBar;
@@ -27,6 +29,7 @@ public class BookLocks {
     private Lock mutexW = new ReentrantLock();
     private Lock mutexR = new ReentrantLock();
     private Lock waiting = new ReentrantLock();
+    private ReadWriteLock rwl = new ReentrantReadWriteLock();
     JTextArea readersField;
     JTextArea writersField;
     JProgressBar progress;
@@ -55,47 +58,38 @@ public class BookLocks {
     }
 
     public void write(WriterLocks writer) {
-        waiting.lock();   //(avoid MORE readers)
+        mutexW.lock();
         String id = Integer.toString(writer.getWriterId());
         writersField.setText(id);
-
-        mutexW.lock();       //block if reader reading
+        rwl.writeLock().lock();
         mutexW.unlock();
-
-        content += id;
-        progress.setValue(progress.getValue() + 1);
-        writersField.setText("");
-        waiting.unlock();
+        try {
+            content += id;
+            progress.setValue(progress.getValue() + 1);
+            writersField.setText("");
+        } finally {
+            rwl.writeLock().unlock();
+        }
     }
 
     public String read(ReaderLocks reader) {
-        waiting.lock(); //block if writer awaiting
-        waiting.unlock();
-
-        mutexR.lock();
-        readers.add(reader);
-        updateOutput();
-        nReaders++;
-        if (nReaders == 1) {
-            mutexW.lock(); //block writers
-        }
-        mutexR.unlock();
+        rwl.readLock().lock();
         try {
-            //read
+            mutexR.lock();
+            readers.add(reader);
+            updateOutput();
+            mutexR.unlock();
+
             sleep((long) (500 + 1000 * Math.random()));
+
+            mutexR.lock();
+            readers.remove(reader);
+            updateOutput();
+            mutexR.unlock();
         } catch (InterruptedException ex) {
-            Logger.getLogger(BookLocks.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            rwl.readLock().unlock();
         }
-
-        mutexR.lock();
-        readers.remove(reader);
-        updateOutput();
-        nReaders--;
-        if (nReaders == 0) {
-            mutexW.unlock();
-        }
-        mutexR.unlock();
-
         return this.content;
     }
 

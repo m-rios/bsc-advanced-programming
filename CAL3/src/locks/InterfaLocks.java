@@ -61,7 +61,7 @@ public class InterfaLocks extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Writers & Readers (Semaphores)");
+        jLabel1.setText("Writers & Readers (Locks)");
 
         jLabel2.setText("Readers");
 
