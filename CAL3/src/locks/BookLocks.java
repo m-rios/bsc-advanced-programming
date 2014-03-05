@@ -59,24 +59,28 @@ public class BookLocks {
 
     public void write(WriterLocks writer) {
         mutexW.lock();
+        checkStatus();
         String id = Integer.toString(writer.getWriterId());
         writersField.setText(id);
         rwl.writeLock().lock();
-        mutexW.unlock();
         try {
             content += id;
             progress.setValue(progress.getValue() + 1);
+            checkStatus();
             writersField.setText("");
         } finally {
             rwl.writeLock().unlock();
+            mutexW.unlock();
         }
     }
 
     public String read(ReaderLocks reader) {
+        checkStatus();
         rwl.readLock().lock();
         try {
             mutexR.lock();
             readers.add(reader);
+            checkStatus();
             updateOutput();
             mutexR.unlock();
 
@@ -84,6 +88,7 @@ public class BookLocks {
 
             mutexR.lock();
             readers.remove(reader);
+            checkStatus();
             updateOutput();
             mutexR.unlock();
         } catch (InterruptedException ex) {

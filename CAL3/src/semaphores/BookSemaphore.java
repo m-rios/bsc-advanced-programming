@@ -55,6 +55,7 @@ public class BookSemaphore {
         try {
             writerWaiting.acquire();   //(avoid MORE readers)
             String id = Integer.toString(writer.getWriterId());
+            checkStatus();
             writersField.setText(id);
             
             mutexW.acquire();       //block if reader reading
@@ -62,6 +63,7 @@ public class BookSemaphore {
             
             content += id;
             progress.setValue(progress.getValue()+1);
+            checkStatus();
             writersField.setText("");
             writerWaiting.release();
         } catch (InterruptedException ex) {
@@ -70,12 +72,14 @@ public class BookSemaphore {
     }
 
     public String read(ReaderSemaphore reader) {
+        checkStatus();
         try {
             writerWaiting.acquire(); //block if writer awaiting
             writerWaiting.release();
 
             mutexR.acquire();
             readers.add(reader);
+            checkStatus();
             updateOutput();
             nReaders++;
             if (nReaders == 1) {
@@ -88,6 +92,7 @@ public class BookSemaphore {
             
             mutexR.acquire();
             readers.remove(reader);
+            checkStatus();
             updateOutput();
             nReaders--;
             if (nReaders == 0) {
