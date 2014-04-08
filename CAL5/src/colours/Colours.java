@@ -1,6 +1,6 @@
 package colours;
 public class Colours extends javax.swing.JFrame {
-    private Gateway gateway = new Gateway();
+    public Gateway gateway = new Gateway();
     private boolean pressedButton = false;
 
     /** Creates new form Colours */
@@ -11,6 +11,7 @@ public class Colours extends javax.swing.JFrame {
         new Painter(jButton2,parchis,gateway);
         new Painter(jButton3,parchis,gateway);
         new Painter(jButton4,parchis,gateway);
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -30,6 +31,8 @@ public class Colours extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Colours");
+
+        jButton1.setOpaque(true);
 
         jButton5.setText("Stop");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -71,8 +74,8 @@ public class Colours extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-816)/2, (screenSize.height-338)/2, 816, 338);
+        setSize(new java.awt.Dimension(816, 338));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

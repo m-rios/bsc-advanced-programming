@@ -11,6 +11,14 @@
 
 package colours;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import remoteControlRmi.ControlModuleInterface;
+
 /**
  *
  * @author Luis
@@ -18,7 +26,17 @@ package colours;
 public class ControlModule extends javax.swing.JFrame {
 
     /** Creates new form ControlModule */
+    ControlModuleInterface controlModule;
     public ControlModule() {
+        try {
+            this.controlModule = (ControlModuleInterface) Naming.lookup("//localhost/RemoteControl");
+        } catch (NotBoundException ex) {
+            Logger.getLogger(ControlModule.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ControlModule.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ControlModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
     }
 
@@ -85,11 +103,21 @@ public class ControlModule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            this.controlModule.resume();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ControlModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            this.controlModule.stop();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ControlModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
