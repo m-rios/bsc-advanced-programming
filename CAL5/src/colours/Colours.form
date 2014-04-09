@@ -68,10 +68,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
+      <Properties>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
+      <Properties>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>

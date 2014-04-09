@@ -34,6 +34,12 @@ public class Colours extends javax.swing.JFrame {
 
         jButton1.setOpaque(true);
 
+        jButton2.setOpaque(true);
+
+        jButton3.setOpaque(true);
+
+        jButton4.setOpaque(true);
+
         jButton5.setText("Stop");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
