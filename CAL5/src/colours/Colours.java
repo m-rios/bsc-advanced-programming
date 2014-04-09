@@ -11,7 +11,6 @@ public class Colours extends javax.swing.JFrame {
         new Painter(jButton2,parchis,gateway);
         new Painter(jButton3,parchis,gateway);
         new Painter(jButton4,parchis,gateway);
-        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
